@@ -1,0 +1,27 @@
+GROUP NDX_FILE=wtm-index.ndx NDX_GROUP=C-alpha LABEL=host
+GROUP NDX_FILE=wtm-index.ndx NDX_GROUP=DEL LABEL=del
+
+CENTER ATOMS=host LABEL=host_center
+CENTER ATOMS=del LABEL=del_center
+
+DISTANCE ATOMS=host_center,del_center LABEL=dist
+
+METAD ...
+  ARG=dist
+  HEIGHT=1.0
+  BIASFACTOR=5
+  TEMP=300.0
+  SIGMA=0.02
+  PACE=500
+  GRID_MIN=1.4
+  GRID_MAX=3.2
+  GRID_BIN=200
+  CALC_RCT
+  RCT_USTRIDE=5
+  LABEL=wtm
+... METAD
+
+UPPER_WALLS ARG=dist AT=3.0 KAPPA=10000.0 LABEL=uwall
+LOWER_WALLS ARG=dist AT=1.6 KAPPA=10000.0 LABEL=lwall
+
+PRINT ARG=* FILE=colvar.dat STRIDE=500
